@@ -1,0 +1,7 @@
+resources:
+  - k8s.yaml
+  - analysis-service.yaml
+  - gateway-service.yaml
+  - eureka-service.yaml
+  - istio.yaml
+  - mysql.yaml

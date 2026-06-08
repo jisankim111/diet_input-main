@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+services:
+  input-url: ${INPUT_SERVICE_URL:http://localhost:8081}
+  analysis-url: ${ANALYSIS_SERVICE_URL:http://localhost:8082}
+
+spring:
+  application:
+    name: diet-gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: analysis-service
+          uri: ${services.analysis-url}
+          predicates:
+            - Path=/api/analysis/**
+        - id: input-service-api
+          uri: ${services.input-url}
+          predicates:
+            - Path=/api/**
+        - id: input-service-ui
+          uri: ${services.input-url}
+          predicates:
+            - Path=/**

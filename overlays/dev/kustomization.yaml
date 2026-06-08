@@ -1,0 +1,15 @@
+namespace: book-dev
+
+resources:
+  - ../../base
+  - namespace.yaml
+
+images:
+  - name: parkwoohyeock/diet_input
+    newTag: latest
+  - name: parkwoohyeock/diet_analysis
+    newTag: latest
+  - name: parkwoohyeock/diet_gateway
+    newTag: latest
+  - name: parkwoohyeock/diet_eureka
+    newTag: latest

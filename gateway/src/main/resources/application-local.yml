@@ -1,0 +1,6 @@
+server:
+  port: 8081
+
+services:
+  input-url: http://localhost:8080
+  analysis-url: http://localhost:8082

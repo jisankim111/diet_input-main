@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diet-analysis-service
+  labels:
+    app: diet-analysis-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diet-analysis-service
+  template:
+    metadata:
+      labels:
+        app: diet-analysis-service
+    spec:
+      containers:
+        - name: diet-analysis-service
+          image: parkwoohyeock/diet_analysis:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: openai-secret
+                  key: OPENAI_API_KEY
+                  optional: true
+            - name: OPENAI_MODEL
+              value: gpt-4.1-mini
+            - name: OPENAI_MOCK_FALLBACK
+              value: "true"
+            - name: EUREKA_CLIENT_ENABLED
+              value: "true"
+            - name: EUREKA_SERVER_URL
+              value: http://diet-eureka-server:8761/eureka/
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: diet-analysis-service
+spec:
+  selector:
+    app: diet-analysis-service
+  ports:
+    - port: 8082
+      targetPort: 8082
+  type: ClusterIP

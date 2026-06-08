@@ -1,0 +1,19 @@
+namespace: book-dev
+
+resources:
+  - ../../base
+  - ../dev/namespace.yaml
+
+images:
+  - name: parkwoohyeock/diet_input
+    newName: diet_input
+    newTag: local
+  - name: parkwoohyeock/diet_analysis
+    newName: diet_analysis
+    newTag: local
+  - name: parkwoohyeock/diet_gateway
+    newName: diet_gateway
+    newTag: local
+  - name: parkwoohyeock/diet_eureka
+    newName: diet_eureka
+    newTag: local

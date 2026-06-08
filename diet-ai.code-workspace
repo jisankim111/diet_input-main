@@ -1,0 +1,24 @@
+{
+  "folders": [
+    {
+      "name": "diet_input-main",
+      "path": "."
+    },
+    {
+      "name": "diet-analysis-service",
+      "path": "analysis"
+    },
+    {
+      "name": "diet-gateway-service",
+      "path": "gateway"
+    },
+    {
+      "name": "diet-eureka-server",
+      "path": "eureka"
+    }
+  ],
+  "settings": {
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.import.maven.enabled": true
+  }
+}

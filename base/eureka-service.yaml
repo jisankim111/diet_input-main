@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diet-eureka-server
+  labels:
+    app: diet-eureka-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diet-eureka-server
+  template:
+    metadata:
+      labels:
+        app: diet-eureka-server
+    spec:
+      containers:
+        - name: diet-eureka-server
+          image: parkwoohyeock/diet_eureka:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8761
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: diet-eureka-server
+spec:
+  selector:
+    app: diet-eureka-server
+  ports:
+    - port: 8761
+      targetPort: 8761
+      nodePort: 30161
+  type: NodePort

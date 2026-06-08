@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet AI Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f7f8fa;
+            --surface: #ffffff;
+            --surface-strong: #f0f3f7;
+            --text: #1f2937;
+            --muted: #6b7280;
+            --border: #e5e7eb;
+            --accent: #2dd4bf;
+            --accent-dark: #0f766e;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #f97316;
+            --shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            --radius: 24px;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; min-height: 100vh; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
+        button { font: inherit; }
+        .app-shell { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+        .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 32px 20px; display: flex; flex-direction: column; gap: 28px; }
+        .brand { font-size: 1.4rem; font-weight: 700; color: var(--accent-dark); letter-spacing: -0.03em; }
+        .sidebar p { margin: 8px 0 0; color: var(--muted); line-height: 1.6; }
+        .nav-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+        .nav-item { display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 18px; color: var(--text); cursor: pointer; transition: background .2s ease, color .2s ease; }
+        .nav-item.active, .nav-item:hover { background: rgba(45, 212, 191, 0.12); color: var(--accent-dark); }
+        .nav-item span.icon { width: 20px; display: inline-flex; justify-content: center; color: var(--accent); }
+        .main { padding: 28px 32px; }
+        .topbar { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+        .topbar h1 { margin: 0; font-size: clamp(1.9rem, 2.6vw, 2.8rem); }
+        .topbar .info { color: var(--muted); line-height: 1.6; }
+        .page-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .page-title .label { background: #ecfeff; color: #0f766e; border-radius: 999px; padding: 8px 14px; font-weight: 600; font-size: 0.9rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 26px; }
+        .card-sm { padding: 20px; }
+        .stat-card { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .stat-card h3 { margin: 0; font-size: 0.95rem; color: var(--muted); }
+        .stat-card .value { font-size: 2.1rem; font-weight: 700; color: var(--text); }
+        .progress-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #ecfdf5; color: #166534; font-size: 0.88rem; font-weight: 600; }
+        .progress-bar { height: 10px; border-radius: 999px; background: var(--surface-strong); overflow: hidden; margin-top: 12px; }
+        .progress-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), #14b8a6); transition: width .5s ease; }
+        .small-card { display: flex; flex-direction: column; gap: 10px; }
+        .small-card h4 { margin: 0; font-size: 1rem; }
+        .small-card .amount { font-size: 1.6rem; font-weight: 700; }
+        .small-card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+        .button-primary { border: none; background: var(--accent); color: #fff; border-radius: 18px; padding: 14px 20px; font-weight: 700; cursor: pointer; box-shadow: 0 16px 40px rgba(45, 212, 191, 0.2); }
+        .button-secondary { border: 1px solid var(--border); background: transparent; color: var(--text); border-radius: 18px; padding: 14px 20px; cursor: pointer; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; }
+        .day { border-radius: 16px; padding: 18px 10px; text-align: center; font-weight: 600; cursor: pointer; transition: background .2s ease, color .2s ease, transform .2s ease; }
+        .day:hover { transform: translateY(-1px); }
+        .day.today { color: var(--accent-dark); }
+        .day.selected { background: var(--accent); color: #fff; }
+        .day.has-record::after { content: ''; display: block; width: 6px; height: 6px; margin: 8px auto 0; border-radius: 999px; background: #14b8a6; }
+        .upload-box { border: 1px dashed var(--border); border-radius: 24px; padding: 32px; text-align: center; background: #ffffff; }
+        .upload-box:hover { border-color: var(--accent); }
+        .upload-icon { width: 48px; height: 48px; border-radius: 18px; background: rgba(45, 212, 191, 0.14); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+        .upload-box input { display: none; }
+        .upload-box label { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: 1px solid var(--border); border-radius: 999px; padding: 12px 18px; background: #f8fafc; cursor: pointer; color: var(--accent-dark); }
+        .photo-preview { border-radius: 24px; overflow: hidden; border: 1px solid var(--border); margin-top: 20px; }
+        .photo-preview img { width: 100%; display: block; }
+        .food-pill { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; padding: 14px 18px; border-radius: 18px; background: #f8fafc; border: 1px solid #e5e7eb; margin-bottom: 12px; }
+        .food-pill strong { font-weight: 700; }
+        .food-pill span { color: var(--muted); }
+        .macro-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        .macro-card { border-radius: 20px; padding: 22px; background: #f8fafc; border: 1px solid var(--border); }
+        .macro-card h4 { margin: 0 0 6px; font-size: 0.95rem; color: var(--muted); }
+        .macro-card .big { font-size: 1.7rem; font-weight: 700; }
+        .feedback-card { display: flex; align-items: flex-start; gap: 16px; padding: 22px; border-radius: 24px; background: #ecfdf5; border: 1px solid #d1fae5; }
+        .feedback-card strong { display: block; font-size: 1rem; margin-bottom: 6px; }
+        .meal-item { display: grid; grid-template-columns: 96px 1fr auto; gap: 16px; align-items: center; padding: 18px; border-radius: 22px; background: #ffffff; border: 1px solid var(--border); }
+        .meal-thumb { width: 96px; height: 96px; border-radius: 20px; background: linear-gradient(135deg, #d8f7f1, #effdfa); display: grid; place-items: center; color: var(--accent-dark); font-size: 0.9rem; }
+        .meal-meta { display: grid; gap: 6px; }
+        .meal-meta h4 { margin: 0; font-size: 1rem; }
+        .meal-meta p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+        .meal-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; background: #ecfdf5; color: #166534; border-radius: 999px; font-size: 0.9rem; }
+        .empty-state { display: grid; place-items: center; min-height: 260px; color: var(--muted); text-align: center; }
+        .empty-state strong { display: block; margin-bottom: 12px; font-size: 1.1rem; color: var(--text); }
+        .footer { color: var(--muted); font-size: 0.95rem; margin-top: 40px; text-align: center; }
+        @media (max-width: 1080px) {
+            .app-shell { grid-template-columns: 1fr; }
+            .sidebar { flex-direction: row; align-items: center; justify-content: space-between; padding: 20px; gap: 16px; overflow-x: auto; }
+            .nav-list { grid-auto-flow: column; grid-template-columns: repeat(7, minmax(0, auto)); gap: 10px; }
+            .main { padding: 20px; }
+        }
+        @media (max-width: 760px) {
+            .topbar { flex-direction: column; align-items: flex-start; }
+            .grid-2, .grid-3, .macro-grid { grid-template-columns: 1fr; }
+            .page-title { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+    <link rel="stylesheet" href="/css/diet-ui.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="page" id="dietUiRoot">
+        <div class="topSpacer"></div>
+        <div class="container">
+            <section id="heroSection"></section>
+            <section class="section" id="featureSection"></section>
+        </div>
+
+        <div class="appShell">
+            <div class="container">
+                <div class="appGrid">
+                    <section class="glass cardPad span12" id="calendarHeatmap"></section>
+                    <section class="glass cardPad span6" id="calorieRingCard"></section>
+                    <section class="glass cardPad span6" id="dailySummaryCard"></section>
+                    <section class="glass cardPad span6" id="nutritionPieChart"></section>
+                    <section class="glass cardPad span6" id="goalPlannerCard"></section>
+                    <section class="glass cardPad span12" id="mealCard"></section>
+                    <section class="glass cardPad span12" id="aiInputPanel"></section>
+                </div>
+
+                <div class="footerLine">
+                    Diet AI는 선택한 날짜의 분석 결과를 대시보드 카드에 실시간으로 반영합니다.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main" style="max-width: 980px; margin: 0 auto; padding: 32px 24px;">
+        <div style="max-width:760px;margin:0 auto 28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                <div>
+                    <div class="label" style="display:inline-flex;padding:10px 16px;background:#ecfeff;color:#0f766e;border-radius:999px;font-weight:700;">Diet AI</div>
+                    <h1 style="margin:18px 0 10px;font-size:clamp(2rem,4vw,2.8rem);">식단 사진 입력 서비스</h1>
+                    <p style="margin:0;color:var(--muted);line-height:1.7;">오늘 날짜 기반 캘린더에서 일자를 선택하면 페이지 아래 업로드 영역으로 스크롤됩니다.</p>
+                </div>
+                <button id="scrollUploadBtn" class="button-primary" style="white-space:nowrap;">직접 업로드</button>
+            </div>
+        </div>
+
+        <section class="card" style="padding:24px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap;">
+                <div>
+                    <strong id="monthTitle" style="font-size:1.4rem;color:var(--accent-dark);"></strong>
+                    <p style="margin:6px 0 0;color:var(--muted);">일자를 누르면 아래 업로드 영역으로 자동 스크롤됩니다.</p>
+                </div>
+                <button class="button-secondary" id="todayBtn" type="button">오늘 보기</button>
+            </div>
+
+            <div class="calendar-grid" id="weekdayHeader" style="margin-bottom:12px;"></div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
+
+        <section id="uploadSection" class="card" style="padding:24px; margin-top:20px; display:block;">
+            <h2 style="margin:0 0 8px">사진 업로드</h2>
+            <p style="margin:0 0 12px;color:var(--muted);">선택한 날짜에 대해 사진을 업로드하면 분석(나중에 별도 마이크로서비스)이 진행됩니다.</p>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start;">
+                <div style="flex:1;min-width:260px">
+                    <div class="upload-box">
+                        <div style="font-size:36px">📸</div>
+                        <div style="margin-top:8px">정면에서 찍은 접시 사진을 업로드하세요.</div>
+                        <input type="file" id="photoInputMain" accept="image/*" style="display:block;margin:14px auto">
+                        <div class="hint">권장: 흰 접시 / 전체가 보이도록 촬영</div>
+                        <div id="photoPreview" class="photo-preview" style="display:none;margin-top:14px;">
+                            <img id="photoPreviewImg" src="" alt="photo preview">
+                        </div>
+                    </div>
+                </div>
+                <div style="min-width:260px;max-width:360px">
+                    <div style="background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:18px">
+                        <div style="font-weight:700;margin-bottom:8px">선택된 날짜</div>
+                        <div id="selectedDateMain" style="color:var(--muted);margin-bottom:12px">—</div>
+                        <div style="display:flex;gap:8px;justify-content:flex-end">
+                            <button id="clearSelection" class="button-secondary">취소</button>
+                            <button id="uploadBtnMain" class="button-primary">업로드 및 분석</button>
+                        </div>
+                        <div id="statusMain" style="margin-top:12px;color:var(--muted)"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="footer" style="margin-top:24px;text-align:center;color:var(--muted);">업로드된 분석 결과는 자동으로 캘린더에 요약되어 표시됩니다.</div>
+    </main>
+
+    <script defer src="/js/diet-ui.js"></script>
+    <script>
+        const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+        const today = new Date();
+        let currentYear = today.getFullYear();
+        let currentMonth = today.getMonth();
+
+        const monthTitle = document.getElementById('monthTitle');
+        const calendarGrid = document.getElementById('calendarGrid');
+        const weekdayHeader = document.getElementById('weekdayHeader');
+        const todayBtn = document.getElementById('todayBtn');
+        const scrollUploadBtn = document.getElementById('scrollUploadBtn');
+        const uploadSection = document.getElementById('uploadSection');
+
+        const selectedDateMain = document.getElementById('selectedDateMain');
+        const photoInputMain = document.getElementById('photoInputMain');
+        const uploadBtnMain = document.getElementById('uploadBtnMain');
+        const clearSelection = document.getElementById('clearSelection');
+        const statusMain = document.getElementById('statusMain');
+
+        let selectedDate = null;
+        let selectedEl = null;
+
+        const weekdays = ['일','월','화','수','목','금','토'];
+        weekdays.forEach(name => {
+            const cell = document.createElement('div');
+            cell.className = 'day';
+            cell.style.fontWeight = '700';
+            cell.style.cursor = 'default';
+            cell.style.background = 'transparent';
+            cell.textContent = name;
+            weekdayHeader.appendChild(cell);
+        });
+
+        function pad(value){return String(value).padStart(2,'0');}
+
+        function scrollToUpload(dateKey) {
+            selectedDate = dateKey;
+            selectedDateMain.textContent = new Date(dateKey).toLocaleDateString();
+            if (selectedEl) selectedEl.classList.remove('selected');
+            // try to mark the calendar button matching date
+            const buttons = calendarGrid.querySelectorAll('.day');
+            buttons.forEach(b => {
+                if (b.dataset && b.dataset.date === dateKey) {
+                    selectedEl = b;
+                    b.classList.add('selected');
+                }
+            });
+            uploadSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+        }
+
+        function buildDayButton(day, monthKey, record) {
+            const dateKey = `${monthKey}-${pad(day)}`;
+            const el = document.createElement('button');
+            el.type = 'button';
+            el.className = 'day';
+            el.dataset.date = dateKey;
+            if (day === today.getDate() && currentMonth === today.getMonth() && currentYear === today.getFullYear()) {
+                el.classList.add('today');
+            }
+            if (record && record.recordCount > 0) {
+                el.classList.add('has-record');
+            }
+            el.innerHTML = `<div>${day}</div>${record && record.totalCalories > 0 ? `<div style="font-size:0.8rem;color:#0f766e;margin-top:6px;">${record.totalCalories} kcal</div>` : ''}`;
+            el.addEventListener('click', () => {
+                scrollToUpload(dateKey);
+            });
+            return el;
+        }
+
+        function renderCalendar() {
+            calendarGrid.innerHTML = '';
+            monthTitle.textContent = `${currentYear}년 ${monthNames[currentMonth]}`;
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const monthKey = `${currentYear}-${pad(currentMonth + 1)}`;
+
+            fetch(`/api/diets?month=${encodeURIComponent(monthKey)}`)
+                .then(res => res.ok ? res.json() : Promise.resolve({summaries: []}))
+                .then(data => {
+                    const summaryMap = new Map((data.summaries || []).map(item => [item.date, item]));
+                    for (let i = 0; i < firstDay; i++) {
+                        const empty = document.createElement('div');
+                        empty.className = 'day';
+                        empty.style.visibility = 'hidden';
+                        calendarGrid.appendChild(empty);
+                    }
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const record = summaryMap.get(`${monthKey}-${pad(day)}`);
+                        const btn = buildDayButton(day, monthKey, record);
+                        calendarGrid.appendChild(btn);
+                    }
+                })
+                .catch(() => {
+                    for (let i = 0; i < firstDay; i++) {
+                        const empty = document.createElement('div');
+                        empty.className = 'day';
+                        empty.style.visibility = 'hidden';
+                        calendarGrid.appendChild(empty);
+                    }
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const btn = buildDayButton(day, monthKey, null);
+                        calendarGrid.appendChild(btn);
+                    }
+                });
+        }
+
+        todayBtn.addEventListener('click', () => {
+            currentYear = today.getFullYear();
+            currentMonth = today.getMonth();
+            renderCalendar();
+        });
+
+        scrollUploadBtn.addEventListener('click', () => {
+            const dateKey = new Date().toISOString().slice(0,10);
+            scrollToUpload(dateKey);
+        });
+
+        clearSelection.addEventListener('click', () => {
+            selectedDate = null;
+            selectedDateMain.textContent = '—';
+            if (selectedEl) selectedEl.classList.remove('selected');
+            selectedEl = null;
+            statusMain.textContent = '';
+        });
+
+        uploadBtnMain.addEventListener('click', async () => {
+            const files = photoInputMain.files;
+            if (!selectedDate) { alert('업로드할 날짜를 선택해 주세요.'); return; }
+            if (!files || files.length === 0) { alert('사진을 선택해 주세요.'); return; }
+            const file = files[0];
+            statusMain.textContent = '업로드 중...';
+            try {
+                const fd = new FormData();
+                fd.append('date', selectedDate);
+                fd.append('image', file);
+                const resp = await fetch('/api/diets/photo', { method: 'POST', body: fd });
+                if (!resp.ok) throw new Error('업로드 실패');
+                statusMain.textContent = '업로드 완료. 분석을 예약했습니다.';
+                // refresh calendar to show the uploaded mark
+                renderCalendar();
+            } catch (err) {
+                statusMain.textContent = '오류: ' + err.message;
+            }
+        });
+
+        // initial render
+        renderCalendar();
+
+        // preview image when selected
+        photoInputMain.addEventListener('change', (e) => {
+            const files = e.target.files;
+            const preview = document.getElementById('photoPreview');
+            const previewImg = document.getElementById('photoPreviewImg');
+            if (!files || files.length === 0) {
+                preview.style.display = 'none';
+                previewImg.src = '';
+                return;
+            }
+            const file = files[0];
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                previewImg.src = evt.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        // simple modal for showing upload result
+        function showResultModal(record) {
+            let modal = document.getElementById('resultModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'resultModal';
+                modal.style.position = 'fixed';
+                modal.style.left = '0';
+                modal.style.top = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.background = 'rgba(0,0,0,0.4)';
+                modal.style.display = 'flex';
+                modal.style.alignItems = 'center';
+                modal.style.justifyContent = 'center';
+                modal.style.zIndex = '9999';
+                modal.innerHTML = `<div id="resultCard" style="background:#fff;border-radius:16px;padding:20px;max-width:520px;width:90%;box-shadow:0 12px 40px rgba(2,6,23,0.2);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><strong>업로드 결과</strong><button id="closeResult" style="border:none;background:transparent;cursor:pointer;font-size:18px;">✕</button></div>
+                    <div id="resultBody"></div>
+                </div>`;
+                document.body.appendChild(modal);
+                modal.querySelector('#closeResult').addEventListener('click', () => { modal.remove(); });
+            }
+            const body = modal.querySelector('#resultBody');
+            const foods = (record.estimatedFoods || []).map(f => `<li>${f.name} × ${f.count} ${f.unit}</li>`).join('');
+            const ar = record.analysisResult || {};
+            body.innerHTML = `
+                <div style="display:flex;gap:12px;align-items:flex-start">
+                    <div style="flex:1">
+                        <div style="color:#6b7280;margin-bottom:8px">파일명</div>
+                        <div style="font-weight:700;margin-bottom:12px">${record.imageName || '—'}</div>
+                        <div style="color:#6b7280;margin-bottom:8px">추정 음식</div>
+                        <ul style="margin:0 0 12px;padding-left:18px;color:#111">${foods || '<li>없음</li>'}</ul>
+                    </div>
+                    <div style="width:160px;text-align:left">
+                        <div style="color:#6b7280">칼로리</div>
+                        <div style="font-weight:700;font-size:1.2rem;margin-bottom:8px">${ar.totalCalories || 0} kcal</div>
+                        <div style="color:#6b7280">피드백</div>
+                        <div style="color:#0f766e;margin-top:6px">${ar.feedback || '-'}</div>
+                    </div>
+                </div>`;
+        }
+
+    </script>
+</body>
+</html>

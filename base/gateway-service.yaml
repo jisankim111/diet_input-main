@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: diet-gateway-service
+  labels:
+    app: diet-gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diet-gateway-service
+  template:
+    metadata:
+      labels:
+        app: diet-gateway-service
+    spec:
+      containers:
+        - name: diet-gateway-service
+          image: parkwoohyeock/diet_gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            - name: INPUT_SERVICE_URL
+              value: http://input-service:8081
+            - name: ANALYSIS_SERVICE_URL
+              value: http://diet-analysis-service:8082
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: diet-gateway-service
+spec:
+  selector:
+    app: diet-gateway-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30101
+  type: NodePort

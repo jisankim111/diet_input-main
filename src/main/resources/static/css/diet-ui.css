@@ -1,0 +1,1084 @@
+/* AURA Premium Minimalist Theme (Apple, Nothing, Muji Inspired) */
+:root {
+  --bg: #f5f5f7;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --border: #e5e5e7;
+  --text: #1d1d1f;
+  --muted: #86868b;
+  --muted-2: #aeaeb2;
+  --point: #10b981;
+  --point-2: #059669;
+  --purple: #a855f7;
+  --danger: #ef4444;
+
+  --radius: 28px;
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.03);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--bg);
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, textarea {
+  font: inherit;
+  outline: none;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+main.main {
+  display: none !important;
+}
+
+#nutritionPieChart,
+#goalPlannerCard {
+  display: none !important;
+}
+
+.container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.topSpacer {
+  height: 80px;
+}
+
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.section {
+  padding: 80px 0;
+}
+
+/* Minimalist Centered Hero Section */
+.heroGrid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.brandPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid #1d1d1f;
+  background: transparent;
+  color: #1d1d1f;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+.brandDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #1d1d1f;
+}
+
+.heroTitle {
+  margin: 28px 0 0;
+  font-size: clamp(40px, 6.5vw, 76px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--text);
+  word-break: keep-all;
+  text-align: center;
+}
+
+.heroSub {
+  margin: 8px 0 0;
+  font-size: clamp(40px, 6.5vw, 76px);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+  color: var(--muted);
+  word-break: keep-all;
+  text-align: center;
+}
+
+.heroDesc {
+  margin: 24px auto 0;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 17px;
+  max-width: 46ch;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.ctaRow {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Pill-shaped buttons */
+.btn {
+  border: none;
+  border-radius: 9999px;
+  padding: 16px 36px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btnPrimary {
+  background: #1d1d1f;
+  color: #ffffff;
+}
+
+.btnPrimary:hover {
+  background: #3a3a3c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btnSecondary {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btnSecondary:hover {
+  background: #f5f5f7;
+  border-color: #d2d2d7;
+}
+
+/* Device mock clean override - flat text center showroom */
+.deviceMock {
+  display: none !important;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.featureCard {
+  padding: 32px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+}
+
+.featureIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f7;
+  border: 1px solid var(--border);
+  font-size: 20px;
+}
+
+.featureTitle {
+  margin: 20px 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.featureDesc {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.appShell {
+  padding: 40px 0 80px;
+}
+
+.appGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.span12 { grid-column: span 12; }
+.span8  { grid-column: span 8; }
+.span6  { grid-column: span 6; }
+.span4  { grid-column: span 4; }
+.span7  { grid-column: span 7; }
+.span5  { grid-column: span 5; }
+
+.cardPad {
+  padding: 32px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.kicker {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cardTitle {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 20px;
+  margin: 6px 0 0;
+  color: var(--text);
+}
+
+/* Premium Minimalist Calorie Ring & Data */
+.bigKcal {
+  text-align: center;
+  font-weight: 800;
+  font-size: 56px;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.bigKcal span {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  margin-top: 10px;
+}
+
+.segmented {
+  display: flex;
+  gap: 6px;
+  background: #f5f5f7;
+  border: 1px solid var(--border);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.segBtn {
+  flex: 1;
+  border: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 10px 14px;
+  color: var(--muted);
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.segBtn.active {
+  background: #ffffff;
+  color: #1d1d1f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.goalControlBlock {
+  margin-bottom: 12px;
+}
+
+.goalControlLabel {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.goalTargetBox {
+  margin: 16px 0 20px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+}
+
+.goalTargetLabel {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.goalTargetValue {
+  margin-top: 6px;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.goalTargetHint {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.summaryStatRow {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.summaryStatBurn {
+  flex: 1;
+  min-width: 120px;
+  background: rgba(239, 68, 68, 0.08);
+  border-radius: 18px;
+}
+
+.summaryStatBurn .val {
+  color: #ef4444;
+}
+
+.summaryStatNet {
+  flex: 1;
+  min-width: 120px;
+  background: #fafafa;
+  border-radius: 18px;
+}
+
+.exercisePanel {
+  margin-top: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  padding: 14px 16px;
+}
+
+.exercisePanelTitle {
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.exerciseList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exerciseItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+}
+
+.exerciseItemMain {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.exerciseName {
+  font-weight: 800;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.exerciseMeta {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.exerciseIntensity {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ecfeff;
+  color: #0f766e;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.exerciseActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.exerciseDeleteBtn {
+  border: 1px solid rgba(239, 68, 68, 0.24);
+  background: #ffffff;
+  color: var(--danger);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.exerciseDeleteBtn:hover {
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.exerciseEmpty {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 2px;
+}
+
+.exerciseForm {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: minmax(140px, 1.4fr) minmax(96px, 0.7fr) minmax(110px, 0.8fr) minmax(92px, 0.7fr);
+  gap: 8px;
+}
+
+.exerciseInput {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.exerciseSaveBtn {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.exerciseStatus {
+  min-height: 18px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.aiFeedbackInline {
+  margin-top: 24px;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+}
+
+.aiFeedbackInlineHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.aiFeedbackInlineTitle {
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.aiFeedbackTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.aiFeedbackTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.08);
+  color: var(--point-2);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.feedbackLines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.feedbackLinesCompact .feedbackLine {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.feedbackLine {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.ringStackVertical {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ringChartCentered {
+  margin: 0 auto;
+}
+
+.ringDateRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ringDateLabel {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.ringDateValue {
+  color: var(--text);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+.piePanel {
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  padding: 14px;
+}
+
+.piePanelTitle {
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.piePanelVertical {
+  margin-top: 4px;
+}
+
+.pieCanvasWrapCentered {
+  width: 180px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.pieLegendCentered {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 220px;
+  margin: 12px auto 0;
+}
+
+.pieLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.pieLegendDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pieLegendName {
+  font-weight: 700;
+  color: var(--text);
+  min-width: 32px;
+}
+
+.pieLegendVal {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.pieEmptyHint {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Heatmap Restyling (Nothing / Muji tone-on-tone) */
+.heatmapHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.heatmapTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.monthLabel {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 22px;
+  color: var(--text);
+}
+
+.monthSub {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.miniBtns {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.miniBtn {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.miniBtn:hover {
+  background: #f5f5f7;
+}
+
+.heatmapGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.weekdayRow {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.weekdayCell {
+  color: var(--muted-2);
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+}
+
+.heatCell {
+  height: 64px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heatCell:hover {
+  transform: scale(1.02);
+  border-color: #86868b;
+  z-index: 10;
+}
+
+.heatCell.empty {
+  cursor: default;
+  opacity: 0.0;
+  pointer-events: none;
+  background: transparent;
+  border-color: transparent;
+}
+
+.heatDayNum {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.heatKcal {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  font-weight: 600;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.heatConsumed {
+  bottom: 22px;
+  color: var(--point-2);
+}
+
+.heatBurned {
+  bottom: 8px;
+  color: var(--danger);
+}
+
+.heatCell.has-exercise::before {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 22px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+.heatCell.selected {
+  border-color: #1d1d1f;
+  box-shadow: 0 0 0 2px #1d1d1f inset;
+}
+
+.heatCell.has::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--point);
+}
+
+.ringRow {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.ringChart {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ringCenterText {
+  position: absolute;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.ringCenterText strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.ringCenterText span {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.macroGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.macroItem {
+  padding: 16px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  text-align: center;
+}
+
+.macroItem .val {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: 18px;
+  color: var(--text);
+}
+
+.macroItem .lab {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mealList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.mealRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: #fafafa;
+  transition: border-color 0.15s ease;
+}
+
+.mealRow:hover {
+  border-color: #86868b;
+}
+
+.mealName {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  max-width: 320px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
+}
+
+.mealAmt {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 15px;
+}
+
+.emptyState {
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 160px;
+  text-align: center;
+  line-height: 1.6;
+  font-weight: 600;
+  font-size: 15px;
+  background: #fafafa;
+  border: 1px dashed var(--border);
+  border-radius: 20px;
+}
+
+.aiPanelForm {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fieldLabel {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  padding: 14px 18px;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.15s ease;
+}
+
+.input:focus {
+  border-color: #1d1d1f;
+}
+
+.fileRow {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+
+.fileBox {
+  flex: 1;
+  min-width: 280px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--border);
+  background: #fafafa;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fileHint {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+.statusLine {
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 13px;
+  margin-top: 12px;
+}
+
+.footerLine {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 40px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+/* Burned Calories Graph for Calorie Ring Card */
+.ringFlexRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.ringChartWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ringChartTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.burnedChartWrap {
+  flex: 1;
+  min-width: 180px;
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: stretch;
+  justify-content: center;
+}
+
+.burnedChartTitle {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+
+.burnedCanvasWrap {
+  position: relative;
+  width: 100%;
+  height: 140px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+  .heroGrid { max-width: 100%; }
+  .featureGrid { grid-template-columns: 1fr; gap: 16px; }
+  .span8, .span7, .span6, .span5, .span4, .span12 { grid-column: span 12; }
+}
