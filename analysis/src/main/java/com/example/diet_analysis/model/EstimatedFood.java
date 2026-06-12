@@ -1,6 +1,9 @@
 package com.example.diet_analysis.model;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class EstimatedFood {
+    @JsonAlias({"name", "food"})
     private String foodName;
     private int amount;
     private String unit;

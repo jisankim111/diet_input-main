@@ -1,6 +1,6 @@
 server:
-  port: 8081
+  port: 9001
 
 services:
-  input-url: http://localhost:8080
-  analysis-url: http://localhost:8082
+  input-url: http://localhost:9000
+  analysis-url: http://localhost:9002
