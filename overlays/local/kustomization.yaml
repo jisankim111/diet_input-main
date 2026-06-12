@@ -2,7 +2,7 @@ namespace: book-dev
 
 resources:
   - ../../base
-  - ../dev/namespace.yaml
+  - namespace.yaml
 
 images:
   - name: parkwoohyeock/diet_input
